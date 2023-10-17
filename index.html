@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
     <title>My PWA</title>
 </head>
+
 <body>
-    <h1>Hello PWA!</h1>
+    <h1>Hello PWA test!</h1>
     <p>This is a Progressive Web App.</p>
+    <button id="install-button" style="display: none;">Cài đặt ứng dụng</button>
+
     <script src="js/main.js"></script>
+
+    <script>
+        const installButton = document.getElementById('install-button');
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault(); // Ngăn chặn trình duyệt hiển thị cửa sổ cài đặt mặc định
+            installButton.style.display = 'block';
+            installButton.addEventListener('click', () => {
+                e.prompt();
+                e.userChoice.then((choice) => {
+                    if (choice.outcome === 'accepted') {
+                        console.log('Người dùng đã cài đặt PWA');
+                        installButton.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
+
 </html>
